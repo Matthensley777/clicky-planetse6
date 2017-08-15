@@ -72,6 +72,10 @@ inputField.addEventListener('keypress', function (event) {
 	}
 })
 
+document.getElementById("clear").addEventListener('click', clearInput)
+function clearInput(e) {
+    var clear = document.getElementById("searchText").value = "";
+}
 
 
 
