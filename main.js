@@ -1,5 +1,6 @@
 var planetHolderDiv = document.getElementById("planetHolder");
-
+var getPlanetsButton = document.getElementById("showButton");
+var inputField = document.getElementById("searchText");
 
 var planets = [{
   name: 'mercury',
@@ -27,13 +28,13 @@ var planets = [{
   url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Neptune_Full.jpg/260px-Neptune_Full.jpg'
 }];
 
-function domString() {
+function domString(planetz) {
 	var planetString = "";
-	for (var i = 0; i < planets.length; i++) {
+	for (var i = 0; i < planetz.length; i++) {
 		var newPlanet = ""
 		newPlanet+=`<div class="planetBox" id="planetBox-${i}">`
-		newPlanet+=`<div class="planetName">${planets[i].name}</div>`;
-		newPlanet+=`<img class="planetImage" src="${planets[i].url}"`
+		newPlanet+=`<div class="planetName hidden">${planetz[i].name}</div>`;
+		newPlanet+=`<img class="planetImage" src="${planetz[i].url}">`
 		newPlanet+=`</div>`
 		planetString+=newPlanet;
 	}
@@ -44,7 +45,35 @@ function writeToDom(strang) {
 	planetHolderDiv.innerHTML = strang;
 }
 
- domString();
+getPlanetsButton.addEventListener('mouseenter', function() {
+	domString(planets);
+});
+
+function showMe(e){
+	e.target.previousSibling.classList.remove('hidden')
+}
+
+document.body.addEventListener('click', function (event) {
+	if (event.target.className === 'planetImage') {
+		console.log("yaa");
+		showMe(event);
+	}
+}); 
+
+inputField.addEventListener('keypress', function (event) {
+	if (event.key === 'Enter') {
+		var txt = inputField.value;
+		var results = planets.filter(function(thing){
+			// console.log("filter thing", thing);
+			return thing.name.indexOf(txt)>-1;
+		});
+		domString(results);
+		console.log("clearAF", results);
+	}
+})
+
+
+
 
 
 
